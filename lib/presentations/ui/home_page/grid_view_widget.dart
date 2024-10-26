@@ -63,25 +63,28 @@ class GridViewWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           final card = pokemonCardsList[index];
           return GestureDetector(
-            onTap: () => _showCardDetails(context, card),
-            child: Card(
-              child: Column(
-                children: [
-                  CachedNetworkImage(
-                    fadeInDuration: const Duration(seconds: 1),
-                    imageUrl: card.images!.large,
-                    fit: BoxFit.cover,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      card.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
+            onTap: () => _showCardDetails(context, card, 'heroTag$index'),
+            child: Hero(
+              tag: 'heroTag$index',
+              child: Card(
+                child: Column(
+                  children: [
+                    CachedNetworkImage(
+                      fadeInDuration: const Duration(seconds: 1),
+                      imageUrl: card.images!.large,
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        card.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -90,11 +93,15 @@ class GridViewWidget extends StatelessWidget {
     );
   }
 
-  void _showCardDetails(BuildContext context, PokemonModel card) {
+  void _showCardDetails(
+      BuildContext context, PokemonModel card, String heroTag) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (_) => BottomSheetCardDetails(card: card),
+      builder: (_) => BottomSheetCardDetails(
+        card: card,
+        heroTag: heroTag,
+      ),
     );
   }
 }

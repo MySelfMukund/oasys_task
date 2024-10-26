@@ -5,30 +5,36 @@ import 'package:pokemon_card_list/core/extensions.dart';
 
 class BottomSheetCardDetails extends StatelessWidget {
   final PokemonModel card;
+  final String heroTag;
 
-  const BottomSheetCardDetails({super.key, required this.card});
+  const BottomSheetCardDetails(
+      {super.key, required this.card, required this.heroTag});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(card.name,
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            CachedNetworkImage(imageUrl: card.images!.large, fit: BoxFit.cover),
-            _buildAttackInfo("Attack", card.attacks!),
-            //dynamically created teh Set Widget(below)
-            _buildSetWidget('Set', card.datumSet!.toJson()),
-            _buildInfo("Type", card.types?.join(", ")),
-            _buildInfo("Weaknesses", card.weaknesses?.join(", ")),
-            _buildInfo("Artist", card.artist),
-            _buildAbilityWidget('Abilities', card.abilities!.toList())
-          ],
+      child: Hero(
+        tag: heroTag,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(card.name,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              CachedNetworkImage(
+                  imageUrl: card.images!.large, fit: BoxFit.cover),
+              _buildAttackInfo("Attack", card.attacks!),
+              //dynamically created teh Set Widget(below)
+              _buildSetWidget('Set', card.datumSet!.toJson()),
+              _buildInfo("Type", card.types?.join(", ")),
+              _buildInfo("Weaknesses", card.weaknesses?.join(", ")),
+              _buildInfo("Artist", card.artist),
+              _buildAbilityWidget('Abilities', card.abilities!.toList())
+            ],
+          ),
         ),
       ),
     );
