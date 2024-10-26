@@ -25,7 +25,12 @@ class BottomSheetCardDetails extends StatelessWidget {
                       fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               CachedNetworkImage(
-                  imageUrl: card.images!.large, fit: BoxFit.cover),
+                imageUrl: card.images!.large,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
               _buildAttackInfo("Attack", card.attacks!),
               //dynamically created teh Set Widget(below)
               _buildSetWidget('Set', card.datumSet!.toJson()),

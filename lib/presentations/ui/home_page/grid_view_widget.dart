@@ -73,6 +73,10 @@ class GridViewWidget extends StatelessWidget {
                       fadeInDuration: const Duration(seconds: 1),
                       imageUrl: card.images!.large,
                       fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
